@@ -1,0 +1,73 @@
+<div class="container">
+    <div class="ui-g">
+
+      <form autocomplete="off" (ngSubmit)="pesquisar()">
+
+        <div class="ui-g-12">
+          <h1>Demandas</h1>
+        </div>
+
+        <div class="ui-g-12 ui-fluid">
+          <label>Nome</label>
+          <input pInputText type="text" name="nome" [(ngModel)]="filtro.nome">
+        </div>
+
+        <div class="ui-g-12">
+          <button pButton type="submit" label="Pesquisar"></button>
+        </div>
+
+      </form>
+
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <p-dataTable [value]="demandas" [paginator]="true" [rows]="filtro.itensPorPagina" [responsive]="true" emptyMessage="Nenhuma demanda encontrada"
+        [lazy]="true" [totalRecords]="totalRegistros" (onLazyLoad)="aoMudarPagina($event)" #tabela>
+          <p-column field="nome" header="Nome" styleClass="col-nome"></p-column>
+          <p-column field="sistema" header="Sistema" styleClass="col-sistema"></p-column>
+          <p-column field="pessoa" header="Servidor (a)" styleClass="col-pessoa"></p-column>
+          <p-column field="lote" header="Lote" styleClass="col-lote"></p-column>
+          <p-column field="plataforma" header="Plataforma Tecnológica" styleClass="col-plataforma"></p-column>
+
+          <p-column header="Data" styleClass="col-data">
+              <ng-template let-dema="rowData" pTemplate="body">
+                  <span>{{ dema.data | date:'dd/MM/yyyy' }}</span>
+              </ng-template>
+          </p-column>
+          <!--<p-column field="totalPfBruto" header="PF Bruto" styleClass="col-pf-bruto">
+            <ng-template let-dem="rowData" pTemplate="body">
+              <span>{{dem.totalPfBruto}}</span>
+            </ng-template>
+          </p-column>-->
+          <p-column field="totalPfPlataforma" header="PF Líquido Ajustado" styleClass="col-pf-liquido-ajustado">
+            <ng-template let-dema="rowData" pTemplate="body">
+              <span>{{dema.totalPfPlataforma}}</span>
+            </ng-template>
+          </p-column>
+          <p-column field="valor" header="Valor" styleClass="col-valor">
+              <ng-template let-dema="rowData" pTemplate="body">
+                <span>{{ dema.valor | number:'1.2-2' }}</span>
+              </ng-template>
+          </p-column>
+          <p-column field="status" header="Status" styleClass="col-status"></p-column>
+          <p-column styleClass="col-acoes">
+            <ng-template let-dema="rowData" pTemplate="body">
+                <a pButton icon="fa fa-pencil" pTooltip="Editar"
+                [routerLink]="['/demandas', dema.codigo]" tooltipPosition="top"></a>
+                <button pButton icon="fa fa-trash" pTooltip="Excluir"
+                  tooltipPosition="top"
+                  (click)="confirmarExclusao(dema)"
+                  [disabled]="!auth.temPermissao('ROLE_REMOVER_DEMANDA')"></button>
+
+            </ng-template>
+          </p-column>
+        </p-dataTable>
+
+      </div>
+
+      <div class="ui-g-12">
+        <a pButton label="Novo Lançamento" routerLink="/demandas/novo"></a>
+      </div>
+
+    </div>
+</div>
+</div>
