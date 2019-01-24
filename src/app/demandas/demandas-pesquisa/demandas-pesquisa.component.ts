@@ -66,7 +66,7 @@ export class DemandasPesquisaComponent implements OnInit {
     .then(() => {
       if (this.grid.first === 0) {
         this.pesquisar();
-      }else {
+      } else {
        this.grid.first = 0;
       }
 
