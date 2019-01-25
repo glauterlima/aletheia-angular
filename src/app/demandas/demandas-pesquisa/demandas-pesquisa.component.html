@@ -22,7 +22,9 @@
       <div class="ui-g-12">
         <p-table [value]="demandas" [paginator]="true" [rows]="filtro.itensPorPagina" [responsive]="true"
         [lazy]="true" [totalRecords]="totalRegistros" (onLazyLoad)="aoMudarPagina($event)" #tabela>
-          <ng-template pTemplate="header">
+
+
+        <ng-template pTemplate="header">
             <tr>
               <th class="col-nome-header">Nome</th>
               <th class="col-sistema-header">Sistema</th>

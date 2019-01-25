@@ -1,10 +1,10 @@
-<p-dataTable [value]="pessoas" [rows]="5" [paginator]="true"
+<p-table [value]="pessoas" [rows]="5" [paginator]="true"
               [responsive]="true">
             <p-column field="nome" header="Nome"></p-column>
             <p-column field="cidade" header="Cidade"></p-column>
             <p-column field="estado" header="Estado"></p-column>
             <p-column field="ativo" header="Status">
-              <ng-template let-pes="rowData" pTemplate="body">
+              <ng-template let-pessoa="rowData" pTemplate="body">
                   <a href="javascript:;" [pTooltip]="pes.ativo ? 'Desativar' : 'Ativar'"
                       tooltipPosition="top">
                     {{ pes.ativo ? 'Ativo' : 'Inativo' }}
@@ -17,4 +17,4 @@
                 <button pButton icon="fa fa-trash" pTooltip="Excluir" tooltipPosition="top"></button>
               </ng-template>
             </p-column>
-</p-dataTable>
+</p-table>

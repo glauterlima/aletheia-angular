@@ -32,7 +32,52 @@ label {
   font-size: 12px;
 }
 
+.col-nomep {
+  width: 120px;
+  text-align: center;
+  font-size: 14px;
+}
+
 .col-nome-header {
+  width: 120px;
+  font-size: 14px;
+}
+
+
+.col-nomep-header {
+  width: 120px;
+  font-size: 14px;
+}
+
+.col-matricula {
+  width: 120px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.col-matricula-header {
+  width: 120px;
+  font-size: 14px;
+}
+
+.col-cargo {
+  width: 120px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.col-cargo-header {
+  width: 120px;
+  font-size: 14px;
+}
+
+.col-statusp {
+  width: 120px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.col-status-header {
   width: 120px;
   font-size: 14px;
 }
@@ -140,5 +185,4 @@ label {
 .col-acoes-header {
   width: 90px;
 }
-
 

@@ -22,37 +22,56 @@
 
   <div class="ui-g">
     <div class="ui-g-12">
-      <p-dataTable [value]="pessoas" [responsive]="true"
-        emptyMessage="Nenhuma pessoa encontrada"
-        [paginator]="true" [rows]="filtro.itensPorPagina"
-        [lazy]="true" [totalRecords]="totalRegistros"
-        (onLazyLoad)="aoMudarPagina($event)" #tabela>
-          <p-column field="nome" header="Nome"></p-column>
-          <p-column field="endereco.cidade" header="Cidade"></p-column>
-          <p-column field="endereco.estado" header="Estado"></p-column>
-          <p-column field="ativo" header="Status">
-            <ng-template let-pes="rowData" pTemplate="body">
-                <a href="javascript:;" [pTooltip]="pes.ativo ? 'Desativar' : 'Ativar'"
-                    tooltipPosition="top" (click)="alternarStatus(pes)">
-                  {{ pes.ativo ? 'Ativo' : 'Inativo' }}
-                </a>
-            </ng-template>
-          </p-column>
-          <p-column styleClass="col-acoes">
-            <ng-template let-pes="rowData" pTemplate="body">
-              <a pButton icon="fa fa-pencil" pTooltip="Editar"
-                [routerLink]="['/pessoas', pes.codigo]" tooltipPosition="top"></a>
-              <button pButton icon="fa-trash" pTooltip="Excluir" tooltipPosition="top"
-                (click)="confirmarExclusao(pes)"
-                [disabled]="!auth.temPermissao('ROLE_REMOVER_PESSOA')"></button>
-            </ng-template>
-          </p-column>
-      </p-dataTable>
-    </div>
 
+      <p-table [value]="pessoas" [responsive]="true"
+      [paginator]="true" [rows]="filtro.itensPorPagina"
+      [lazy]="true" [totalRecords]="totalRegistros"
+      (onLazyLoad)="aoMudarPagina($event)" #tabela>
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th class="col-nomep-header">Nome</th>
+          <th class="col-matricula-header">Matrícula</th>
+          <th class="col-cargo-header">Cargo</th>
+          <th class="col-status-header">Status</th>
+          <th class="col-acoes-header"></th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-pessoa>
+        <tr>
+          <td class="col-nomep">{{ pessoa.nome }}</td>
+          <td class="col-matricula">{{ pessoa.dadosFuncionais.matricula }}</td>
+          <td class="col-cargo">{{ pessoa.dadosFuncionais.cargo }}</td>
+          <td class="col-statusp">
+            <a href="javascript:;"
+              [pTooltip]="pessoa.ativo ? 'Desativar' : 'Ativar'"
+              tooltipPosition="top"
+              (click)="alternarStatus(pessoa)">
+              {{ pessoa.ativo ? 'Ativo' : 'Inativo' }}
+            </a>
+          </td>
+          <td class="col-acoes">
+            <button pButton icon="fa fa-pencil" pTooltip="Editar"
+            [routerLink]="['/pessoas', pessoa.codigo]" tooltipPosition="top"></button>
+            <button pButton icon="fa fa-trash" pTooltip="Excluir"
+              tooltipPosition="top"
+              (click)="confirmarExclusao(pessoa)"
+              [disabled]="!auth.temPermissao('ROLE_REMOVER_PESSOA')"></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="6"></td>
+            Nenhuma demanda encontrada!
+        </tr>
+      </ng-template>
+    </p-table>
     <div class="ui-g-12">
       <a pButton label="Nova Pessoa" routerLink="/pessoas/novo"></a>
     </div>
   </div>
 
+</div>
 </div>
