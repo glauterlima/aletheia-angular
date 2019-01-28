@@ -1,5 +1,5 @@
 import { Title } from '@angular/platform-browser';
-import { FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
@@ -41,12 +41,13 @@ export class DemandasCadastroComponent implements OnInit {
   status = [
     {label: 'Pendente', value: 'PENDENTE' },
     {label: 'Em Análise', value: 'EMANALISE' },
-    {label: 'Finalizada', value: 'FINALIZADA' },
+    {label: 'Aprovada', value: 'APROVADA' },
+    {label: 'Faturada', value: 'FATURADA' },
  ];
 
   pessoas = [];
 
-  demanda = new Demanda();
+  // demanda = new Demanda();
 
   tipos = [
     {label: 'Corretiva', value: 'CORRETIVA' },
@@ -58,6 +59,8 @@ export class DemandasCadastroComponent implements OnInit {
 
   sistemas = [];
 
+  formulario: FormGroup;
+
   constructor(
     private loteService: LoteService,
     private sistemaService: SistemaService,
@@ -67,10 +70,12 @@ export class DemandasCadastroComponent implements OnInit {
     private toasty: ToastyService,
     private route: ActivatedRoute,
     private router: Router,
-    private title: Title
+    private title: Title,
+    private formBuilder: FormBuilder
   ) { }
 
   ngOnInit() {
+    this.configurarFormulario();
 
     const codigoDemanda = this.route.snapshot.params['codigo'];
 
@@ -86,27 +91,56 @@ export class DemandasCadastroComponent implements OnInit {
   }
 
   get editando() {
-    return Boolean(this.demanda.codigo)
+    return Boolean(this.formulario.get('codigo').value)
+  }
+
+  configurarFormulario() {
+    this.formulario = this.formBuilder.group({
+      status: ['PENDENTE', Validators.required],
+      codigo: [],
+      nome: [null, [Validators.required, Validators.minLength(5)]],
+      sistema: this.formBuilder.group({
+        codigo: [null, Validators.required],
+        nome: []
+      }),
+      pessoa: this.formBuilder.group({
+        codigo: [null, Validators.required],
+        nome: []
+      }),
+      lote: this.formBuilder.group({
+        codigo: [null, Validators.required],
+        nome: []
+      }),
+      plataforma: [null, Validators.required],
+      tipo: ['EVOLUTIVA', Validators.required],
+      totalPfBruto: [null, Validators.required],
+      totalPfLiquido: [null, Validators.required],
+      totalPfPlataforma: [null, Validators.required],
+      data: [null, Validators.required],
+      valor: [null, Validators.required],
+      observacao: []
+    })
   }
 
   carregarDemanda(codigo: number) {
     this.demandaService.buscarPorCodigo(codigo)
     .then(demanda => {
-      this.demanda = demanda;
+      // this.demanda = demanda;
+      this.formulario.patchValue(demanda);
       this.atualizarTituloEdicao();
     })
     .catch(erro => this.errorHandler.handle(erro));
   }
 
-  salvar(form: FormControl) {
+  salvar() {
     if (this.editando) {
-      this.atualizarDemanda(form);
+      this.atualizarDemanda();
     } else {
-      this.adicionarDemanda(form);
+      this.adicionarDemanda();
     }
   }
-  adicionarDemanda(form: FormControl) {
-    this.demandaService.adicionar(this.demanda)
+  adicionarDemanda() {
+    this.demandaService.adicionar(this.formulario.value)
     .then(demandaAdicionada => {
       this.toasty.success('Demanda adicionada com sucesso!');
 
@@ -118,10 +152,11 @@ export class DemandasCadastroComponent implements OnInit {
     .catch(erro => this.errorHandler.handle(erro));
   }
 
-  atualizarDemanda(form: FormControl) {
-    this.demandaService.atualizar(this.demanda)
+  atualizarDemanda() {
+    this.demandaService.atualizar(this.formulario.value)
     .then(demanda => {
-      this.demanda = demanda;
+      // this.demanda = demanda;
+      this.formulario.patchValue(demanda);
 
       this.toasty.success('Demanda alterada com sucesso!');
       this.atualizarTituloEdicao();
@@ -154,8 +189,8 @@ export class DemandasCadastroComponent implements OnInit {
     .catch(erro => this.errorHandler.handle(erro));
   }
 
-  novo(form: FormControl) {
-    form.reset();
+  novo() {
+    this.formulario.reset();
 
     setTimeout(function() {
       this.demanda = new Demanda();
@@ -165,6 +200,6 @@ export class DemandasCadastroComponent implements OnInit {
   }
 
   atualizarTituloEdicao() {
-    this.title.setTitle(`Edição da demanda: ${this.demanda.nome} `);
+    this.title.setTitle(`Edição da demanda: ${this.formulario.get('nome').value} `);
   }
 }

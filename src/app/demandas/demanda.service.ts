@@ -8,8 +8,6 @@ import { AuthHttp } from 'angular2-jwt';
 import { Demanda } from 'app/core/model';
 import { environment } from 'environments/environment';
 
-
-
 export class DemandaFiltro {
   nome: string;
   data: Date;

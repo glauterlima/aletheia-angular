@@ -1,5 +1,5 @@
 <div class="container">
-  <form #f="ngForm" autocomplete="off" (ngSubmit)="salvar(f)">
+  <form  autocomplete="off" (ngSubmit)="salvar()" [formGroup]="formulario">
 
     <div class="ui-g">
       <div class="ui-g-12">
@@ -7,86 +7,86 @@
       </div>
 
       <div class="ui-g-12">
-          <p-selectButton name="status" [options]="status" [(ngModel)]="demanda.status" #statu="ngModel"></p-selectButton>
+          <p-selectButton name="status" [options]="status" formControlName="status"></p-selectButton>
       </div>
 
       <div class="ui-g-6 ui-md-3 ui-fluid">
-        <label>Nome</label>
-        <input pInputText type="text" name="nome" ngModel #nome="ngModel" required minlength="5" [(ngModel)]="demanda.nome" #nome="ngModel">
+          <label>Nome</label>
+          <input pInputText type="text" name="nome" formControlName="nome">
 
-      <app-message [control]="nome" error="required" text="Informe um Nome"></app-message>
+        <app-message [control]="formulario.get('nome')" error="required" text="Informe um Nome"></app-message>
 
-      <app-message [control]="nome" error="minlength" text="Mínimo de {{ nome.errors?.minlength?.requiredLength }} caracteres."></app-message>
+        <app-message [control]="formulario.get('nome')" error="minlength" text="Mínimo de {{ formulario.get('nome').errors?.minlength?.requiredLength }} caracteres."></app-message>
 
       </div>
 
-      <div class="ui-g-6 ui-md-3 ui-fluid">
+      <div class="ui-g-6 ui-md-3 ui-fluid" formGroupName="sistema">
           <label>Sistema</label>
           <p-dropdown name="sistema" [options]="sistemas" placeholder="Selecione" [autoWidth]="false"
-          [filter]="true" ngModel required [(ngModel)]="demanda.sistema.codigo"></p-dropdown>
+          [filter]="true" formControlName="codigo"></p-dropdown>
       </div>
 
-      <div class="ui-g-12 ui-fluid">
+      <div class="ui-g-12 ui-fluid" formGroupName="pessoa">
           <label>Responsável pela aferição</label>
           <p-dropdown name="pessoa" [options]="pessoas" placeholder="Selecione" [autoWidth]="false"
-          [filter]="true" ngModel required [(ngModel)]="demanda.pessoa.codigo"></p-dropdown>
+          [filter]="true" formControlName="codigo"></p-dropdown>
       </div>
 
-      <div class="ui-g-4   ui-fluid">
+      <div class="ui-g-4   ui-fluid" formGroupName="lote">
           <label>Lote</label>
-          <p-dropdown name="lote" [options]="lotes" placeholder="Selecione" [autoWidth]="false" [filter]="true" ngModel required [(ngModel)]="demanda.lote.codigo"></p-dropdown>
+          <p-dropdown name="lote" [options]="lotes" placeholder="Selecione" [autoWidth]="false" [filter]="true" formControlName="codigo"></p-dropdown>
       </div>
 
       <div class="ui-g-4   ui-fluid">
           <label>Plataforma</label>
           <p-dropdown name="plataforma" [options]="plataformas" placeholder="Selecione"
-          [autoWidth]="false" required [(ngModel)]="demanda.plataforma" #plataforma></p-dropdown>
+          [autoWidth]="false" formControlName="plataforma"></p-dropdown>
       </div>
 
       <div class="ui-g-4   ui-fluid">
           <label>Tipo</label>
           <p-dropdown name="tipo" [options]="tipos" placeholder="Selecione"
-          [autoWidth]="false" [filter]="true" required [(ngModel)]="demanda.tipo" #tipo></p-dropdown>
+          [autoWidth]="false" [filter]="true" formControlName="tipo" ></p-dropdown>
       </div>
       <br />
       <div class="ui-g-4   ui-fluid">
           <label>PF Bruto</label>
           <input pInputText type="text" placeholder="0,00" name="totalPfBruto" currencyMask
-          [options]="{ prefix:'', thousands: '.', decimal:',', allowNegative: false}" ngModel required [(ngModel)]="demanda.totalPfBruto" #totalPfBruto="ngModel">
+          [options]="{ prefix:'', thousands: '.', decimal:',', allowNegative: false}" formControlName="totalPfBruto">
       </div>
 
       <div class="ui-g-4   ui-fluid">
           <label>PF Líquido</label>
           <input pInputText type="text" placeholder="0,00" name="totalPfLiquido" currencyMask
-          [options]="{ prefix:'', thousands: '.', decimal:',', allowNegative: false}" ngModel required [(ngModel)]="demanda.totalPfLiquido" #totalPfLiquido="ngModel">
+          [options]="{ prefix:'', thousands: '.', decimal:',', allowNegative: false}" formControlName="totalPfLiquido">
       </div>
 
       <div class="ui-g-4   ui-fluid">
           <label>PF Ajustado</label>
           <input pInputText type="text" placeholder="0,00" name="totalPfPlataforma" currencyMask
-          [options]="{ prefix:'', thousands: '.', decimal:',', allowNegative: false}" ngModel required [(ngModel)]="demanda.totalPfPlataforma" #totalPfPlataforma="ngModel">
+          [options]="{ prefix:'', thousands: '.', decimal:',', allowNegative: false}" formControlName="totalPfPlataforma">
       </div>
 
       <div class="ui-g-6   ui-fluid">
           <label>Data</label>
-          <p-calendar name="data" dateFormat="dd/mm/yy" [readonlyInput]="true" [showIcon]="true" required ngModel required [(ngModel)]="demanda.data" #data="ngModel"></p-calendar>
+          <p-calendar name="data" dateFormat="dd/mm/yy" [readonlyInput]="true" [showIcon]="true" formControlName="data"></p-calendar>
       </div>
 
       <div class="ui-g-6   ui-fluid">
           <label>Valor</label>
           <input pInputText type="text" placeholder="0,00" name="valor" currencyMask
-          [options]="{ prefix:'', thousands: '.', decimal:',', allowNegative: false}" ngModel required  [(ngModel)]="demanda.valor" #valor="ngModel">
+          [options]="{ prefix:'', thousands: '.', decimal:',', allowNegative: false}" formControlName="valor">
       </div>
 
       <div class="ui-g-12   ui-fluid">
           <label>Observação</label>
-          <textarea name="observacao" pInputTextarea rows="3"  [(ngModel)]="demanda.observacao" #observacao="ngModel"></textarea>
+          <textarea name="observacao" pInputTextarea rows="3"  formControlName="observacao"></textarea>
       </div>
 
       <div class="ui-g-12">
-        <button pButton type="submit" label="Salvar" [disabled]="f.invalid"></button>
+        <button pButton type="submit" label="Salvar" [disabled]="formulario.invalid"></button>
         <button pButton type="button" label="Novo" class="ui-button-info"
-        (click)="novo(f)"></button>
+        (click)="novo()"></button>
         <a routerLink="/demandas">Voltar para a pesquisa</a>
       </div>
 

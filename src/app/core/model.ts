@@ -44,7 +44,7 @@ export class Demanda {
   totalPfLiquido: number;
   totalPfPlataforma: number;
   data: Date;
-  status: string = 'EMANALISE';
+  status: string = 'PENDENTE';
   valor: number;
   observacao: string;
 }
