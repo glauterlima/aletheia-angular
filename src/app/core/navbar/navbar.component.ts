@@ -5,7 +5,7 @@ import { LogoutService } from './../../seguranca/logout.service';
 import { AuthService } from './../../seguranca/auth.service';
 import { ErrorHandlerService } from '../error-handler.service';
 
-
+// dfdf
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
