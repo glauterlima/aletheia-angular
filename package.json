@@ -1,6 +1,6 @@
 {
-  "name": "aletheia-ui",
-  "version": "0.0.0",
+  "name": "aletheia-angular",
+  "version": "1.0.0",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -32,9 +32,9 @@
     "primeng": "^5.2.3",
     "rxjs": "^5.5.6",
     "zone.js": "^0.8.19",
-    "@angular/cli": "~1.5.7",
-    "@angular/compiler-cli": "^5.2.8",
-    "@angular/language-service": "^5.2.8",
+    "@angular/cli": "~1.7.3",
+    "@angular/compiler-cli": "^5.2.0",
+    "@angular/language-service": "^5.2.0",
     "@types/jasmine": "~2.8.3",
     "@types/jasminewd2": "~2.0.2",
     "@types/node": "~6.0.60",
